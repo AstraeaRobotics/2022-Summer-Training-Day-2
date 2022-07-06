@@ -47,17 +47,16 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    CANSparkMax motor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    CANSparkMax motor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
-    CANSparkMax motor3 = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
-    CANSparkMax motor4 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
-    CANSparkMax motor5 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
-    CANSparkMax motor6 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
-    Joystick joystick1 = new Joystick(2);
+     motor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+     motor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+     motor3 = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
+     motor4 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
+     motor5 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
+     motor6 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
+     joystick1 = new Joystick(2);
     rightMotors = new MotorControllerGroup(motor1, motor2, motor3);
     leftMotors = new MotorControllerGroup(motor4, motor5, motor6);
-    rightMotors.set(joystick1.getRawAxis(5));
-    leftMotors.set(joystick1.getRawAxis(1));
+    
   }
 
 
@@ -88,6 +87,9 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+
+    rightMotors.set(joystick1.getRawAxis(5));
+    leftMotors.set(joystick1.getRawAxis(1));
   }
 
   /** This function is called periodically during autonomous. */
