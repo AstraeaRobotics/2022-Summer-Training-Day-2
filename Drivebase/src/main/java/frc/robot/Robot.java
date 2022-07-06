@@ -5,13 +5,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-
-import com.revrobotics.CANSparkMax; //Motor Imports
-import com.revrobotics.CANSparkMaxLowLevel; //Type and other Imports
-
-import com.revrobotics.CANEncoder; //Encoder imports
-
-import edu.wpi.first.wpilibj.PS4Controller;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,26 +18,17 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
-
-  CANSparkMax rightMaster = new CANSparkMax(1,CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax rightFollower1 = new CANSparkMax(2,CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax rightFollower2 = new CANSparkMax(3,CANSparkMaxLowLevel.MotorType.kBrushless);
-
-  CANSparkMax leftMaster = new CANSparkMax(4,CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax leftFollower1 = new CANSparkMax(5,CANSparkMaxLowLevel.MotorType.kBrushless);
-  CANSparkMax leftFollower2 = new CANSparkMax(6,CANSparkMaxLowLevel.MotorType.kBrushless);
-
-
-  PS4Controller controller = new PS4Controller(0);
-
-  double maxSpeed = 0.5; //We're not going to go max speed
+  private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
-  public void robotInit() {  
+  public void robotInit() {
+    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    m_chooser.addOption("My Auto", kCustomAuto);
+    SmartDashboard.putData("Auto choices", m_chooser);
   }
 
   /**
@@ -53,7 +39,7 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {  }
+  public void robotPeriodic() {}
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -67,6 +53,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    m_autoSelected = m_chooser.getSelected();
+    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    System.out.println("Auto selected: " + m_autoSelected);
   }
 
   /** This function is called periodically during autonomous. */
@@ -82,7 +71,6 @@ public class Robot extends TimedRobot {
         break;
     }
   }
-  
 
   /** This function is called once when teleop is enabled. */
   @Override
@@ -90,29 +78,7 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    if (controller.getLeftY() != 0) {
-      rightMaster.set(controller.getLeftY());
-      rightFollower1.set(controller.getLeftY());
-      rightFollower2.set(controller.getLeftY());
-    }
-    if (controller.getRightY() != 0) {
-      leftMaster.set(controller.getRightY());
-      leftFollower1.set(controller.getRightY());
-      leftFollower2.set(controller.getRightY());
-    }
-
-    if (rightMaster.get() > maxSpeed) {
-      rightMaster.set(maxSpeed);
-      rightFollower1.set(maxSpeed);
-      rightFollower2.set(maxSpeed);
-    }
-    if (leftMaster.get() < maxSpeed) {
-      leftMaster.set(maxSpeed);
-      leftFollower1.set(maxSpeed);
-      leftFollower2.set(maxSpeed);
-    }
-  }
+  public void teleopPeriodic() {}
 
   /** This function is called once when the robot is disabled. */
   @Override
