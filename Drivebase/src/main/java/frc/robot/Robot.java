@@ -5,10 +5,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.Joystick;
+
 
 
 
@@ -23,10 +26,17 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static CANSparkMax motor1;
+  public static CANSparkMax motor2;
+  public static CANSparkMax motor3;
+  public static CANSparkMax motor4;
+  public static CANSparkMax motor5;
+  public static CANSparkMax motor6;
+  public static Joystick joystick1;
+  public static MotorControllerGroup rightMotors;
+  public static MotorControllerGroup leftMotors;
 
 
-  //motors
-  CANSparkMax sparkMax = new CANSparkMax(0, CANSparkMaxLowLevel.MotorType.kBrushless);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -37,6 +47,17 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    CANSparkMax motor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+    CANSparkMax motor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+    CANSparkMax motor3 = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
+    CANSparkMax motor4 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
+    CANSparkMax motor5 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
+    CANSparkMax motor6 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
+    Joystick joystick1 = new Joystick(2);
+    rightMotors = new MotorControllerGroup(motor1, motor2, motor3);
+    leftMotors = new MotorControllerGroup(motor4, motor5, motor6);
+    rightMotors.set(joystick1.getRawAxis(5));
+    leftMotors.set(joystick1.getRawAxis(1));
   }
 
 
