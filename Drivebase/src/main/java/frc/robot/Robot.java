@@ -4,16 +4,13 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
-import edu.wpi.first.wpilibj.Joystick;
-
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,6 +19,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * project.
  */
 public class Robot extends TimedRobot {
+
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
@@ -32,11 +30,9 @@ public class Robot extends TimedRobot {
   public static CANSparkMax motor4;
   public static CANSparkMax motor5;
   public static CANSparkMax motor6;
-  public static Joystick joystick1;
+  public static Joystick joystick;
   public static MotorControllerGroup rightMotors;
   public static MotorControllerGroup leftMotors;
-
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,18 +43,16 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-     motor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
-     motor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
-     motor3 = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
-     motor4 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
-     motor5 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
-     motor6 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
-     joystick1 = new Joystick(2);
-    rightMotors = new MotorControllerGroup(motor1, motor2, motor3);
-    leftMotors = new MotorControllerGroup(motor4, motor5, motor6);
-    
+    motor1 = new CANSparkMax(1, CANSparkMaxLowLevel.MotorType.kBrushless);
+    motor2 = new CANSparkMax(2, CANSparkMaxLowLevel.MotorType.kBrushless);
+    motor3 = new CANSparkMax(3, CANSparkMaxLowLevel.MotorType.kBrushless);
+    motor4 = new CANSparkMax(4, CANSparkMaxLowLevel.MotorType.kBrushless);
+    motor5 = new CANSparkMax(5, CANSparkMaxLowLevel.MotorType.kBrushless);
+    motor6 = new CANSparkMax(6, CANSparkMaxLowLevel.MotorType.kBrushless);
+    joystick = new Joystick(2);
+    leftMotors = new MotorControllerGroup(motor1, motor2, motor3);
+    rightMotors = new MotorControllerGroup(motor4, motor5, motor6);
   }
-
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -68,9 +62,7 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {
-
-  }
+  public void robotPeriodic() {}
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -88,8 +80,8 @@ public class Robot extends TimedRobot {
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
 
-    rightMotors.set(joystick1.getRawAxis(5));
-    leftMotors.set(joystick1.getRawAxis(1));
+    rightMotors.set(joystick.getRawAxis(5));
+    leftMotors.set(joystick.getRawAxis(1));
   }
 
   /** This function is called periodically during autonomous. */
